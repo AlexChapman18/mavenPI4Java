@@ -36,7 +36,6 @@
                         <manifest>
                             <!-- give full qualified name of your main class-->
                             <mainClass>Controller.Run</mainClass>
-                            <classPath>Class-Path: /opt/pi4j/lib/pi4j-core.jar /opt/pi4j/lib/pi4j-device.jar /opt/pi4j/lib/pi4j-gpio-extension.jar</classPath>
                         </manifest>
                     </archive>
                 </configuration>
