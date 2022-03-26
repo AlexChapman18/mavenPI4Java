@@ -5,8 +5,9 @@ import com.pi4j.io.spi.SpiChannel;
 
 import java.io.IOException;
 
-public class ExecuteSpiClass {
+public class Run {
     public static void main(String[] args) throws IOException {
+        System.out.println("Running");
         GpioController gpio = GpioFactory.getInstance();
         GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
         GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
