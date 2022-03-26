@@ -13,22 +13,19 @@ import com.pi4j.wiringpi.Spi;
 // CSN chip select (Need to be set in order to use chip (Could be hi or lo))
 
 
-
-public class RunRecieve {
-    public static void main(String[] args) throws InterruptedException {
-        GpioController gpio = GpioFactory.getInstance();
-
-        // defines the CE pin
-        GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "MyLED", PinState.HIGH);
-        GpioPinDigitalInput MISOPin = gpio.
-        GpioPinDigitalOutput MOSIPin = gpio.
-
-
-
-//        while(true){
-//            System.out.println("Toggling LED");
-//            pin.toggle();
-//            Thread.sleep(1000);
-//        }
-    }
-}
+//
+//public class RunRecieve {
+//    public static void main(String[] args) throws InterruptedException {
+//        GpioController gpio = GpioFactory.getInstance();
+//
+//        // defines the CE pin
+//        GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "MyLED", PinState.HIGH);
+//
+//
+////        while(true){
+////            System.out.println("Toggling LED");
+////            pin.toggle();
+////            Thread.sleep(1000);
+////        }
+//    }
+//}
