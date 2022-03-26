@@ -10,6 +10,7 @@ import com.pi4j.wiringpi.Spi;
 // MISO = Data output (from antenna to pi) pin:
 // MOSI = Data input (from pi to antenna)
 // pins 19 21 23 = mosi miso sclk
+// CSN chip select (Need to be set in order to use chip (Could be hi or lo))
 
 
 
@@ -20,7 +21,7 @@ public class RunRecieve {
         // defines the CE pin
         GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "MyLED", PinState.HIGH);
         GpioPinDigitalInput MISOPin = gpio.
-        GpioPinDigitalOutput MOSI = gpio
+        GpioPinDigitalOutput MOSIPin = gpio.
 
 
 
