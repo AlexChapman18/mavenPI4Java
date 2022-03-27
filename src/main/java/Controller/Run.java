@@ -11,8 +11,8 @@ import java.util.Arrays;
 public class Run {
 
     static GpioController gpio = GpioFactory.getInstance();
-    static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
-    static GpioPinDigitalOutput CSNpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "CSN", PinState.LOW);
+    static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "CE", PinState.LOW);
+//    static GpioPinDigitalOutput CSNpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "CSN", PinState.LOW);
     static GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
     static GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
 
