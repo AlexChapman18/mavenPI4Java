@@ -109,9 +109,6 @@ public class Run {
         System.out.println("\nRead Config:");
         System.out.println(Arrays.toString(read((byte) CONFIG)));
 
-        byte[] result = receiver.write("Hello World".getBytes("US-ASCII"));
-        System.out.println(result);
-        
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
