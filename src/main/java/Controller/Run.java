@@ -85,7 +85,6 @@ public class Run {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Running");
-        receiver.
 
 //        Set PRIM_RX bit to 1 and do CRC config
         System.out.println("\nPrim bit and CRC config:");
@@ -112,7 +111,7 @@ public class Run {
 
         byte[] result = receiver.write("Hello World".getBytes("US-ASCII"));
         System.out.println(result);
-
+        
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
