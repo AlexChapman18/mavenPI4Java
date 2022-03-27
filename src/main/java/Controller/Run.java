@@ -79,13 +79,13 @@ public class Run {
 //
 //    }
 
-
     public static byte[] read_payload() throws IOException {
         return read((byte) 0b01100001);
     }
 
     public static void main(String[] args) throws IOException {
         System.out.println("Running");
+        receiver.
 
 //        Set PRIM_RX bit to 1 and do CRC config
         System.out.println("\nPrim bit and CRC config:");
@@ -109,6 +109,10 @@ public class Run {
 
         System.out.println("\nRead Config:");
         System.out.println(Arrays.toString(read((byte) CONFIG)));
+
+        byte[] result = receiver.write("Hello World".getBytes("US-ASCII"));
+        System.out.println(result);
+
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
