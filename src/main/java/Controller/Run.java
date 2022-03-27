@@ -102,7 +102,7 @@ public class Run {
         CEpin.toggle();
 
         System.out.println("\nRead Config:");
-        printBinary(read((byte) CONFIG));
+        System.out.println(Arrays.toString(read((byte) CONFIG)));
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
