@@ -106,7 +106,6 @@ public class Run {
 //        Set PWR_UP and CE to high
         System.out.println("\nPWR_UP:");
         printBinary(write(CONFIG, (byte) 0b11110000));
-        CEpin.toggle();
 
         System.out.println("\nRead Config:");
         System.out.println(Arrays.toString(read((byte) CONFIG)));
