@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class Run {
 
     static GpioController gpio = GpioFactory.getInstance();
+    static
     static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
     static GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
     static GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
@@ -21,7 +22,8 @@ public class Run {
 
     static {
         try {
-            receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED);
+//            receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED);
+            receiver = SpiFactory.getInstance(SpiChannel.CS0, 10);
         } catch (IOException ignored) {}
     }
 
@@ -72,6 +74,11 @@ public class Run {
         byte[] result = receiver.write(packet);
         return result;
     }
+
+    public byte[] bashWrite(byte MemoryMap, byte data){
+
+    }
+
 
     public static byte[] read_payload() throws IOException {
         return read((byte) 0b01100001);
