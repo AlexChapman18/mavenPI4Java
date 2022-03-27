@@ -13,6 +13,8 @@ public class Run {
         GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
         GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
 
+
+
         byte PRIM_RX = (byte) 0x00;
         byte Acknowledgement = (byte) 0x01;
         byte AddressWidth = (byte) 0x03;
@@ -22,24 +24,24 @@ public class Run {
         SpiClass receiver = new SpiClass(SpiChannel.CS0);
 
 //        Set PRIM_RX bit to 1
-        receiver.spi.write(PRIM_RX, (byte) 0x0D);
+        System.out.println(receiver.spi.write(PRIM_RX, (byte) 0x0D));
 
 //        Set Acknowledgement to 0
-        receiver.spi.write(Acknowledgement, (byte) 0x00);
+        System.out.println(receiver.spi.write(Acknowledgement, (byte) 0x00));
 
 //        Use same address width
-        receiver.spi.write(AddressWidth, (byte) 0x03);
+        System.out.println(receiver.spi.write(AddressWidth, (byte) 0x03));
 
 //        Use same frequency channel
-        receiver.spi.write(frequencyChannel, (byte) 0x01);
+        System.out.println(receiver.spi.write(frequencyChannel, (byte) 0x01));
 
 //        Set PWR_UP and CE to high
-        receiver.spi.write(PRIM_RX, (byte) 0x0F);
+        System.out.println(receiver.spi.write(PRIM_RX, (byte) 0x0F));
         CEpin.toggle();
 
-        while (true){
-            System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
-        }
+        System.out.println(receiver.spi.write((byte) 0x61));
+        System.out.println("Ended");
+//      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
     }
 }
