@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 public class Run {
 
-    static GpioController gpio = GpioFactory.getInstance();
-    static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
-//    static GpioPinDigitalOutput CSNpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "CSN", PinState.LOW);
-    static GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
-    static GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
+//    static GpioController gpio = GpioFactory.getInstance();
+//    static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
+////    static GpioPinDigitalOutput CSNpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_10, "CSN", PinState.LOW);
+//    static GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
+//    static GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
 
     // Creates a spi object on channel cs0 (One connected on raspberry pi)
     // default spi speed 1 MHz
@@ -23,7 +23,7 @@ public class Run {
     static {
         try {
 //          receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED);
-            receiver = SpiFactory.getInstance(SpiChannel.CS1, 1);
+            receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED, SpiDevice.DEFAULT_SPI_MODE);
         } catch (IOException ignored) {}
     }
 
