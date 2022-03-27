@@ -48,13 +48,12 @@ public class Run {
     }
 
     public static void printBinary(byte[] bytes){
-        System.out.println(toBinary(bytes[0]));
-        System.out.println(toBinary(bytes[1]));
+        System.out.println(toBinary(bytes[0]) + " | " + toBinary(bytes[1]));
     }
 
     public static byte[] read(byte MemoryMap) throws IOException {
         byte[] packet = new byte[2];
-        packet[0] = (byte) (MemoryMap | W_REGISTER);   // address byte
+        packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
         packet[1] = 0b00000000000000000000000000000000;  //sets data to 0
 
         printBinary(packet);
@@ -64,7 +63,7 @@ public class Run {
 
     public static byte[] write(byte MemoryMap, byte data) throws IOException {
         byte[] packet = new byte[2];
-        packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
+        packet[0] = (byte) (MemoryMap | W_REGISTER);   // address byte
         packet[1] = data;                         // data byte
 
         printBinary(packet);
@@ -81,27 +80,27 @@ public class Run {
 
 //        Set PRIM_RX bit to 1 and do CRC config
         System.out.println("\nPrim bit and CRC config:");
-        System.out.println(Arrays.toString(write(CONFIG, (byte) 0b10110000)));
+        printBinary(write(CONFIG, (byte) 0b10110000));
 
 //        Set Acknowledgement to 0
         System.out.println("\nAcknowledgement:");
-        System.out.println(Arrays.toString(write(EN_AA, (byte) 0b00000000)));
+        printBinary(write(EN_AA, (byte) 0b00000000));
 
 //        Use same address width UNSURE
         System.out.println("\nAddress width:");
-        System.out.println(Arrays.toString(write(SETUP_AW, (byte) 0b11000000)));
+        printBinary(write(SETUP_AW, (byte) 0b11000000));
 
 //        Use same frequency channel
         System.out.println("\nFrequency Channel:");
-        System.out.println(Arrays.toString(write(RF_CH, (byte) 0b10000000)));
+        printBinary(write(RF_CH, (byte) 0b10000000));
 
 //        Set PWR_UP and CE to high
         System.out.println("\nPWR_UP:");
-        System.out.println(Arrays.toString(write(CONFIG, (byte) 0b11110000)));
+        printBinary(write(CONFIG, (byte) 0b11110000));
         CEpin.toggle();
 
         System.out.println("\nRead Config:");
-        System.out.println(Arrays.toString(read((byte) CONFIG)));
+        printBinary(read((byte) CONFIG));
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
