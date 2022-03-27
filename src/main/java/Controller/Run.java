@@ -9,42 +9,88 @@ import java.io.IOException;
 import java.util.Arrays;
 
 public class Run {
+
+    static GpioController gpio = GpioFactory.getInstance();
+    static GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
+    static GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
+    static GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
+
+    // Creates a spi object on channel cs0 (One connected on raspberry pi)
+    // default spi speed 1 MHz
+    public static SpiDevice receiver;
+
+    static {
+        try {
+            receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED);
+        } catch (IOException ignored) {}
+    }
+
+//    MemoryMap
+    static byte CONFIG = (byte) 0b00000000; // 0
+    static byte EN_AA = (byte) 0b00010000; // 1
+    static byte EN_RXADDR = (byte) 0b00001000; // 2
+    static byte SETUP_AW = (byte) 0b00011000; // 3
+    static byte SETUP_RETR = (byte) 0b00000100; // 4
+    static byte RF_CH = (byte) 0b00010100; // 5
+    static byte RF_SETUP = (byte) 0b000011000; // 6
+    static byte STATUS = (byte) 0b000111000; // 7
+    static byte OBSERVE_TX = (byte) 0b000000100; // 8
+    static byte CD = (byte) 0b000; // 9
+    static byte TX_ADDR = (byte) 0b000; // 10
+    static byte RX_PW_P0 = (byte) 0b000; // 11
+//  ...
+
+    static byte R_REGISTER = 0b00000000; //
+    static byte W_REGISTER = 0b00100000; //
+
+    public static byte[] read(byte MemoryMap) throws IOException {
+        byte[] packet = new byte[2];
+        packet[0] = (byte) (MemoryMap | W_REGISTER);   // address byte
+        packet[1] = 0b00000000000000000000000000000000;  //sets data to 0
+
+        byte[] result = receiver.write(packet);
+        return result;
+    }
+
+    public static byte[] write(byte MemoryMap, byte data) throws IOException {
+        byte[] packet = new byte[2];
+        packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
+        packet[1] = data;                         // data byte
+
+        byte[] result = receiver.write(packet);
+        return result;
+    }
+
+    public static byte[] read_payload() throws IOException {
+        return read((byte) 0b01100001);
+    }
+
     public static void main(String[] args) throws IOException {
         System.out.println("Running");
-        GpioController gpio = GpioFactory.getInstance();
-        GpioPinDigitalOutput CEpin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "CE", PinState.LOW);
-        GpioPinDigitalInput Clock = gpio.provisionDigitalInputPin(RaspiPin.GPIO_14);
-        GpioPinDigitalInput RX = gpio.provisionDigitalInputPin(RaspiPin.GPIO_13);
 
-
-
-        byte PRIM_RX = (byte) 0x00;
-        byte Acknowledgement = (byte) 0x01;
-        byte AddressWidth = (byte) 0x03;
-        byte frequencyChannel = (byte) 0x05;
-
-//        Creates a spi object on channel cs0 (One connected on raspberry pi)
-        SpiDevice receiver = SpiFactory.getInstance(SpiChannel.CS0, // default spi speed 1 MHz
-                SpiDevice.DEFAULT_SPI_SPEED, // default spi mode 0
-                SpiDevice.DEFAULT_SPI_MODE);
-
-//        Set PRIM_RX bit to 1
-        System.out.println(Arrays.toString(receiver.write(PRIM_RX, (byte) 0x0D)));
+//        Set PRIM_RX bit to 1 and do CRC config
+        System.out.println("\nPrim bit and CRC config:");
+        System.out.println(Arrays.toString(write(CONFIG, (byte) 0b10110000)));
 
 //        Set Acknowledgement to 0
-        System.out.println(Arrays.toString(receiver.write(Acknowledgement, (byte) 0x00)));
+        System.out.println("\nAcknowledgement:");
+        System.out.println(Arrays.toString(write(EN_AA, (byte) 0b00000000)));
 
-//        Use same address width
-        System.out.println(Arrays.toString(receiver.write(AddressWidth, (byte) 0x03)));
+//        Use same address width UNSURE
+        System.out.println("\nAddress width:");
+        System.out.println(Arrays.toString(write(SETUP_AW, (byte) 0b11000000)));
 
 //        Use same frequency channel
-        System.out.println(Arrays.toString(receiver.write(frequencyChannel, (byte) 0x01)));
+        System.out.println("\nFrequency Channel:");
+        System.out.println(Arrays.toString(write(RF_CH, (byte) 0b10000000)));
 
 //        Set PWR_UP and CE to high
-        System.out.println(Arrays.toString(receiver.write(PRIM_RX, (byte) 0x0F)));
+        System.out.println("\nPWR_UP:");
+        System.out.println(Arrays.toString(write(CONFIG, (byte) 0b11110000)));
         CEpin.toggle();
 
-        System.out.println(Arrays.toString(receiver.write((byte) 0x61)));
+        System.out.println("\nConfig:");
+        System.out.println(Arrays.toString(read((byte) CONFIG)));
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
