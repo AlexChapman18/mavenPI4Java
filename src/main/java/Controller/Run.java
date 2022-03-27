@@ -23,7 +23,7 @@ public class Run {
     static {
         try {
 //          receiver = SpiFactory.getInstance(SpiChannel.CS0, SpiDevice.DEFAULT_SPI_SPEED);
-            receiver = SpiFactory.getInstance(SpiChannel.CS0, 10);
+            receiver = SpiFactory.getInstance(SpiChannel.CS0, 1);
         } catch (IOException ignored) {}
     }
 
