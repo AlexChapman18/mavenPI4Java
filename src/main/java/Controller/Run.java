@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.*;
 import com.pi4j.io.spi.SpiChannel;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Run {
     public static void main(String[] args) throws IOException {
@@ -24,22 +25,22 @@ public class Run {
         SpiClass receiver = new SpiClass(SpiChannel.CS0);
 
 //        Set PRIM_RX bit to 1
-        System.out.println(receiver.spi.write(PRIM_RX, (byte) 0x0D));
+        System.out.println(Arrays.toString(receiver.spi.write(PRIM_RX, (byte) 0x0D)));
 
 //        Set Acknowledgement to 0
-        System.out.println(receiver.spi.write(Acknowledgement, (byte) 0x00));
+        System.out.println(Arrays.toString(receiver.spi.write(Acknowledgement, (byte) 0x00)));
 
 //        Use same address width
-        System.out.println(receiver.spi.write(AddressWidth, (byte) 0x03));
+        System.out.println(Arrays.toString(receiver.spi.write(AddressWidth, (byte) 0x03)));
 
 //        Use same frequency channel
-        System.out.println(receiver.spi.write(frequencyChannel, (byte) 0x01));
+        System.out.println(Arrays.toString(receiver.spi.write(frequencyChannel, (byte) 0x01)));
 
 //        Set PWR_UP and CE to high
-        System.out.println(receiver.spi.write(PRIM_RX, (byte) 0x0F));
+        System.out.println(Arrays.toString(receiver.spi.write(PRIM_RX, (byte) 0x0F)));
         CEpin.toggle();
 
-        System.out.println(receiver.spi.write((byte) 0x61));
+        System.out.println(Arrays.toString(receiver.spi.write((byte) 0x61)));
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
 
