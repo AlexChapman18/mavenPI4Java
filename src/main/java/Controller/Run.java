@@ -48,6 +48,7 @@ public class Run {
         packet[0] = (byte) (MemoryMap | W_REGISTER);   // address byte
         packet[1] = 0b00000000000000000000000000000000;  //sets data to 0
 
+        System.out.println("Bytes Sent" + Arrays.toString(packet));
         byte[] result = receiver.write(packet);
         return result;
     }
@@ -57,6 +58,7 @@ public class Run {
         packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
         packet[1] = data;                         // data byte
 
+        System.out.println("Bytes Sent" + Arrays.toString(packet));
         byte[] result = receiver.write(packet);
         return result;
     }
@@ -89,7 +91,7 @@ public class Run {
         System.out.println(Arrays.toString(write(CONFIG, (byte) 0b11110000)));
         CEpin.toggle();
 
-        System.out.println("\nConfig:");
+        System.out.println("\nRead Config:");
         System.out.println(Arrays.toString(read((byte) CONFIG)));
         System.out.println("Ended");
 //      System.out.println("Clock: " + Clock.getState() + ", Data: " + RX.getState());
