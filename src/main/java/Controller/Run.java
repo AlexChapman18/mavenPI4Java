@@ -71,7 +71,7 @@ public class Run {
         packet[1] = data;                         // data byte
 
         printBinary(packet);
-        byte[] result = receiver.write(packet);
+        byte[] result = receiver.write(packet[0], packet[1]);
         return result;
     }
 
