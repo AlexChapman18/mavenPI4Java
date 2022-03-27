@@ -43,12 +43,21 @@ public class Run {
     static byte R_REGISTER = 0b00000000; //
     static byte W_REGISTER = 0b00100000; //
 
+    public static String toBinary( byte byteBoi ){
+        return String.format("%8s", Integer.toBinaryString(byteBoi & 0xFF)).replace(' ', '0');
+    }
+
+    public static void printBinary(byte[] bytes){
+        System.out.println(toBinary(bytes[0]));
+        System.out.println(toBinary(bytes[1]));
+    }
+
     public static byte[] read(byte MemoryMap) throws IOException {
         byte[] packet = new byte[2];
         packet[0] = (byte) (MemoryMap | W_REGISTER);   // address byte
         packet[1] = 0b00000000000000000000000000000000;  //sets data to 0
 
-        System.out.println("Bytes Sent" + Arrays.toString(packet));
+        printBinary(packet);
         byte[] result = receiver.write(packet);
         return result;
     }
@@ -58,7 +67,7 @@ public class Run {
         packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
         packet[1] = data;                         // data byte
 
-        System.out.println("Bytes Sent" + Arrays.toString(packet));
+        printBinary(packet);
         byte[] result = receiver.write(packet);
         return result;
     }
