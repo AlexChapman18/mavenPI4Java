@@ -27,17 +27,17 @@ public class Run {
 
 //    MemoryMap
     static byte CONFIG = (byte) 0b00000000; // 0
-    static byte EN_AA = (byte) 0b00010000; // 1
-    static byte EN_RXADDR = (byte) 0b00001000; // 2
-    static byte SETUP_AW = (byte) 0b00011000; // 3
+    static byte EN_AA = (byte) 0b00000001; // 1
+    static byte EN_RXADDR = (byte) 0b00000010; // 2
+    static byte SETUP_AW = (byte) 0b00000011; // 3
     static byte SETUP_RETR = (byte) 0b00000100; // 4
-    static byte RF_CH = (byte) 0b00010100; // 5
-    static byte RF_SETUP = (byte) 0b000011000; // 6
-    static byte STATUS = (byte) 0b000111000; // 7
-    static byte OBSERVE_TX = (byte) 0b000000100; // 8
-    static byte CD = (byte) 0b000; // 9
-    static byte TX_ADDR = (byte) 0b000; // 10
-    static byte RX_PW_P0 = (byte) 0b000; // 11
+    static byte RF_CH = (byte) 0b00000101; // 5
+    static byte RF_SETUP = (byte) 0b00000110; // 6
+    static byte STATUS = (byte) 0b00000111; // 7
+    static byte OBSERVE_TX = (byte) 0b00001000; // 8
+    static byte CD = (byte) 0b00001001; // 9
+    static byte TX_ADDR = (byte) 0b00001010; // 10
+    static byte RX_PW_P0 = (byte) 0b00001011; // 11
 //  ...
 
     static byte R_REGISTER = 0b00000000; //
@@ -54,7 +54,7 @@ public class Run {
     public static byte[] read(byte MemoryMap) throws IOException {
         byte[] packet = new byte[2];
         packet[0] = (byte) (MemoryMap | R_REGISTER);   // address byte
-        packet[1] = 0b00000000000000000000000000000000;  //sets data to 0
+        packet[1] = 0b00000000;  //sets data to 0
 
         printBinary(packet);
         byte[] result = receiver.write(packet);
